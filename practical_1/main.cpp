@@ -1,20 +1,38 @@
 #include <SFML/Graphics.hpp>
 
-int main(){
-  sf::RenderWindow window(sf::VideoMode({200, 200}), "SFML works!");
-  sf::CircleShape shape(100.f);
-  shape.setFillColor(sf::Color::Green);
+using namespace sf;
+using namespace std;
 
-  while (window.isOpen()){
-      sf::Event event;
-      while (window.pollEvent(event)){
-      if (event.type == sf::Event::Closed){
-        window.close();
-      }
-    }
-    window.clear();
-    window.draw(shape);
-    window.display();
-  }
-  return 0;
+const Keyboard::Key controls[4] = {
+	Keyboard::A,    // Player1 UP
+	Keyboard::Z,    // Player1 Down
+	Keyboard::Up,   // Player2 UP
+	Keyboard::Down, // Player2 Down
+};
+
+const Vector2f paddleSize(25.f, 100.f);
+const float ballRadius = 10.f;
+const int gameWidth = 800;
+const int gameHeight = 600;
+const float paddleSpeed = 400.f;
+const float paddleOffsetWall = 10.f;
+
+CircleShape ball;
+RectangleShape paddles[2];
+
+
+void Load() {
+	// Set size and origin of paddles
+	for (auto&p : paddles) {
+		p.setSize(paddleSize;)
+		p.setOrigin(paddleSize / 2.f);
+	}
+	// Set size of origin of ball
+	ball.setRadius(ballRadius);
+	ball.setOrigin(ballRadius, ballRadius);
+	// reset paddle position
+	paddles[0].setPosition(Vector2f(paddleOffsetWall + paddleSize.x / 2.f, gameHeight / 2.f));
+	paddles[1].setPosition(Vector2f( gameWidth - paddleOffsetWall - paddleSize.x / 2.f, gameHeight / 2.f));
+	// reset Ball Position
+	ball.setPosition(gameWidth / 2.f ,gameHeight/2);
 }
