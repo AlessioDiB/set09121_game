@@ -36,3 +36,59 @@ void Load() {
 	// reset Ball Position
 	ball.setPosition(gameWidth / 2.f ,gameHeight/2);
 }
+
+void Update(RenderWindow &window) {
+	// Reset clock, recalculate deltatime
+	static Clock clock
+	float dt = clock.restart().asSeconds();
+	// check and consume events
+	Event event;
+	while (window.pollEvent(event)) {
+		if (event.type == Event::Closed) {
+			window.close();
+			return;
+		}
+	}
+	
+	// Quit Via ESC Key
+	if (Keyboard::isKeyPressed(Keyboard::Escape))  {
+		window.close();
+	}
+	
+	// handle paddle movement
+	float direction = 0.0.f;
+	if (Keyboard::isKeyPressed(controls[0])) {
+		direction--;
+	}
+	if (Keyboard::isKeyPressed(controls[1])) {
+		direction++;
+	}
+	paddles[0].move(Vector2f(0.f, direction * paddleSpeed * * dt));	
+}
+
+
+void Render(RenderWindow &window) {
+	// Draw Everything
+	window.draw(paddles[0]);
+	window.draw(paddles[1]);
+	window.draw(ball);
+}
+
+
+int main() {
+	RenderWindow window(VideoMode(gameWidth, gameHeight), "PONG");
+	Load();
+	while (window.isOpen()) {
+		window.clear();
+		Update(window);
+		Render(window);
+		window.display();
+	}
+	return 0;
+}
+
+
+
+
+
+
